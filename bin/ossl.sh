@@ -49,7 +49,7 @@ TOOL_DBG="false"
 #   # notify admin | user
 # else
 #   # false
-#   # missing argument(s) | failed to load config | missing tool | missing file
+#   # missing argument(s) | missing file
 #   # return $NOT_SUCCESS
 #   # or
 #   # exit 128
