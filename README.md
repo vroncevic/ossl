@@ -1,4 +1,4 @@
-Encrypting/Decrypting files (bash script)
+Encrypting/Decrypting files (Bash scripts)
 ================================================================================
 
 The README is used to introduce the tool and provide instructions on
