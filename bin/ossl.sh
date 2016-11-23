@@ -231,7 +231,13 @@ function __ossl() {
 		if [ "$STATUS" -eq "$NOT_SUCCESS" ]; then
 			MSG="Missing external tool ${cfgosslutil[OSSL]}"
 			if [ "${configossl[LOGGING]}" == "true" ]; then
-				__sendemail "$MSG" "${configossl[ADMIN_EMAIL]}"
+				LOG[MSG]=$MSG
+				LOG[FLAG]="error"
+				__logging $LOG
+			fi
+			MSG="Missing external tool ${cfgosslutil[OSSL]}"
+			if [ "${configossl[EMAILING]}" == "true" ]; then
+				__sendmail "$MSG" "${configossl[ADMIN_EMAIL]}"
 			fi
 			exit 131
 		fi
