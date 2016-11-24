@@ -68,11 +68,11 @@ TOOL_DBG="false"
 function __encrypt() {
     local INPUT_FILE=$1
     local PASSWORD=$2
-    local FUNC=${FUNCNAME[0]}
+	local FUNC=${FUNCNAME[0]}
 	local MSG=""
     if [ -n "$INPUT_FILE" ] && [ -n "$PASSWORD" ]; then
         if [ -f "$INPUT_FILE" ]; then
-            local ROOT_CMD="${cfgosslutil[OSSL]} ${cfgosslutil[OSSL_ALG]}"
+            local ROOT_CMD="${configosslutil[OSSL]} ${configosslutil[OSSL_ALG]}"
             local IN_FILE="-salt -in \"$INPUT_FILE\""
             local OUT_FILE="-out \"$INPUT_FILE.aes\""
             eval "$ROOT_CMD $IN_FILE $OUT_FILE -k \"$PASSWORD\""
@@ -140,7 +140,7 @@ function __decrypt() {
 	local MSG=""
     if [ -n "$INPUT_FILE" ]; then
         if [ -f "$INPUT_FILE" ]; then
-			local ROOT_CMD="${cfgosslutil[OSSL]} ${cfgosslutil[OSSL_ALG]}"
+			local ROOT_CMD="${configosslutil[OSSL]} ${configosslutil[OSSL_ALG]}"
 			local IN_FILE="-salt -in \"$INPUT_FILE\""
 			eval "$ROOT_CMD -d $IN_FILE"
         else
@@ -199,9 +199,9 @@ function __decrypt() {
 function __ossl() {
 	local OPTION=$1
 	local FILE=$2
-	local FUNC=${FUNCNAME[0]}
-	local MSG=""
 	if [ -n "$OPTION" ] && [ -n "$FILE" ]; then
+		local FUNC=${FUNCNAME[0]}
+		local MSG=""
 		declare -A configossl=()
 		__loadconf $OSSL_CFG configossl
 		local STATUS=$?
@@ -214,8 +214,8 @@ function __ossl() {
 			fi
 			exit 129
 		fi
-		declare -A cfgosslutil=()
-		__loadutilconf $OSSL_UTIL_CFG cfgosslutil
+		declare -A configosslutil=()
+		__loadutilconf $OSSL_UTIL_CFG configosslutil
 		STATUS=$?
 		if [ "$STATUS" -eq "$NOT_SUCCESS" ]; then
 			MSG="Failed to load tool script utilities configuration"
@@ -226,16 +226,15 @@ function __ossl() {
 			fi
 			exit 130
 		fi
-		__checktool "${cfgosslutil[OSSL]}"
+		__checktool "${configosslutil[OSSL]}"
 		STATUS=$?
 		if [ "$STATUS" -eq "$NOT_SUCCESS" ]; then
-			MSG="Missing external tool ${cfgosslutil[OSSL]}"
+			MSG="Missing external tool ${configosslutil[OSSL]}"
 			if [ "${configossl[LOGGING]}" == "true" ]; then
 				LOG[MSG]=$MSG
 				LOG[FLAG]="error"
 				__logging $LOG
 			fi
-			MSG="Missing external tool ${cfgosslutil[OSSL]}"
 			if [ "${configossl[EMAILING]}" == "true" ]; then
 				__sendmail "$MSG" "${configossl[ADMIN_EMAIL]}"
 			fi
@@ -261,6 +260,12 @@ function __ossl() {
 					exit 133
 				fi
 				exit 0
+			fi
+			MSG="Missing target file $FILE"
+			if [ "$TOOL_DBG" == "true" ]; then
+				printf "$DSTA" "$OSSL_TOOL" "$FUNC" "$MSG"
+			else
+				printf "$SEND" "[$OSSL_TOOL]" "$MSG"
 			fi
 			exit 134
 		fi
