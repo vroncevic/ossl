@@ -11,14 +11,14 @@ UTIL_VERSION=ver.1.0
 UTIL=$UTIL_ROOT/sh-util-srv/$UTIL_VERSION
 UTIL_LOG=$UTIL/log
 
+. $UTIL/bin/devel.sh
+. $UTIL/bin/usage.sh
 . $UTIL/bin/checkroot.sh
 . $UTIL/bin/checktool.sh
-. $UTIL/bin/loadconf.sh
-. $UTIL/bin/loadutilconf.sh
 . $UTIL/bin/logging.sh
 . $UTIL/bin/sendmail.sh
-. $UTIL/bin/usage.sh
-. $UTIL/bin/devel.sh
+. $UTIL/bin/loadconf.sh
+. $UTIL/bin/loadutilconf.sh
 
 OSSL_TOOL=ossl
 OSSL_VERSION=ver.1.0
@@ -28,17 +28,17 @@ OSSL_UTIL_CFG=$OSSL_HOME/conf/${OSSL_TOOL}_util.cfg
 OSSL_LOG=$OSSL_HOME/log
 
 declare -A OSSL_USAGE=(
-	[TOOL_NAME]="__$OSSL_TOOL"
-	[ARG1]="[OPTION] e | d (encrypt | decrypt) file"
-	[EX-PRE]="# Encrypt target file"
-	[EX]="__$OSSL_TOOL e /opt/origin.txt"
+	[USAGE_TOOL]="$OSSL_TOOL"
+	[USAGE_ARG1]="[OPTION] e | d (encrypt | decrypt) file"
+	[USAGE_EX_PRE]="# Encrypt target file"
+	[USAGE_EX]="$OSSL_TOOL e /opt/origin.txt"
 )
 
-declare -A LOG=(
-	[TOOL]="$OSSL_TOOL"
-	[FLAG]="info"
-	[PATH]="$OSSL_LOG"
-	[MSG]=""
+declare -A OSSL_LOGGING=(
+	[LOG_TOOL]="$OSSL_TOOL"
+	[LOG_FLAG]="info"
+	[LOG_PATH]="$OSSL_LOG"
+	[LOG_MSGE]="None"
 )
 
 TOOL_DBG="false"
@@ -73,15 +73,15 @@ function __encrypt() {
     if [ -n "$INPUT_FILE" ] && [ -n "$PASSWORD" ]; then
         if [ -f "$INPUT_FILE" ]; then
             local ROOT_CMD="${configosslutil[OSSL]} ${configosslutil[OSSL_ALG]}"
-            local IN_FILE="-salt -in \"$INPUT_FILE\""
-            local OUT_FILE="-out \"$INPUT_FILE.aes\""
-            eval "$ROOT_CMD $IN_FILE $OUT_FILE -k \"$PASSWORD\""
+            local IN_FILE="-salt -in $INPUT_FILE"
+            local OUT_FILE="-out $INPUT_FILE.aes"
+            eval "$ROOT_CMD $IN_FILE $OUT_FILE -k $PASSWORD"
         else
             MSG="Please check target file [$INPUT_FILE]"
 			if [ "${configossl[LOGGING]}" == "true" ]; then
-				LOG[MSG]=$MSG
-				LOG[FLAG]="error"
-				__logging $LOG
+				OSSL_LOGGING[LOG_MSGE]="$MSG"
+				OSSL_LOGGING[LOG_FLAG]="error"
+				__logging OSSL_LOGGING
 			fi
             if [ "$TOOL_DBG" == "true" ]; then
 				printf "$DSTA" "$OSSL_TOOL" "$FUNC" "$MSG"
@@ -91,17 +91,18 @@ function __encrypt() {
             return $NOT_SUCCESS
         fi
 		if [ "${configossl[LOGGING]}" == "true" ]; then
-			LOG[MSG]="Encrypted file: $IN_FILE > $OUT_FILE"
-			LOG[FLAG]="info"
-			__logging $LOG
+			MSG="Encrypted file: $IN_FILE > $OUT_FILE"
+			OSSL_LOGGING[LOG_FLAG]="info"
+			OSSL_LOGGING[LOG_MSGE]="$MSG"
+			__logging OSSL_LOGGING
 		fi
         return $SUCCESS
     fi
     MSG="Please check parameters [$INPUT_FILE] [PASSWORD]"
 	if [ "${configossl[LOGGING]}" == "true" ]; then
-		LOG[MSG]=$MSG
-		LOG[FLAG]="error"
-		__logging $LOG
+		OSSL_LOGGING[LOG_MSGE]="$MSG"
+		OSSL_LOGGING[LOG_FLAG]="error"
+		__logging OSSL_LOGGING
 	fi
     if [ "$TOOL_DBG" == "true" ]; then
 		printf "$DSTA" "$OSSL_TOOL" "$FUNC" "$MSG"
@@ -141,14 +142,14 @@ function __decrypt() {
     if [ -n "$INPUT_FILE" ]; then
         if [ -f "$INPUT_FILE" ]; then
 			local ROOT_CMD="${configosslutil[OSSL]} ${configosslutil[OSSL_ALG]}"
-			local IN_FILE="-salt -in \"$INPUT_FILE\""
+			local IN_FILE="-salt -in $INPUT_FILE"
 			eval "$ROOT_CMD -d $IN_FILE"
         else
             MSG="Please check target file [$INPUT_FILE]"
 			if [ "${configossl[LOGGING]}" == "true" ]; then
-				LOG[MSG]=$MSG
-				LOG[FLAG]="error"
-				__logging $LOG
+				OSSL_LOGGING[LOG_MSGE]="$MSG"
+				OSSL_LOGGING[LOG_FLAG]="error"
+				__logging OSSL_LOGGING
 			fi
 			if [ "$TOOL_DBG" == "true" ]; then
 				printf "$DSTA" "$OSSL_TOOL" "$FUNC" "$MSG"
@@ -158,17 +159,18 @@ function __decrypt() {
             return $NOT_SUCCESS
         fi
 		if [ "${configossl[LOGGING]}" == "true" ]; then
-			LOG[MSG]="Decrypted file: $IN_FILE"
-			LOG[FLAG]="info"
-			__logging $LOG
+			MSG="Decrypted file: $IN_FILE"
+			OSSL_LOGGING[LOG_MSGE]="$MSG"
+			OSSL_LOGGING[LOG_FLAG]="info"
+			__logging OSSL_LOGGING
 		fi
         return $SUCCESS
     fi
     MSG="Please check target file [$INPUT_FILE]"
 	if [ "${configossl[LOGGING]}" == "true" ]; then
-		LOG[MSG]=$MSG
-		LOG[FLAG]="error"
-		__logging $LOG
+		OSSL_LOGGING[LOG_MSGE]="$MSG"
+		OSSL_LOGGING[LOG_FLAG]="error"
+		__logging OSSL_LOGGING
 	fi
     if [ "$TOOL_DBG" == "true" ]; then
 		printf "$DSTA" "$OSSL_TOOL" "$FUNC" "$MSG"
@@ -205,7 +207,7 @@ function __ossl() {
 		declare -A configossl=()
 		__loadconf $OSSL_CFG configossl
 		local STATUS=$?
-		if [ "$STATUS" -eq "$NOT_SUCCESS" ]; then
+		if [ $STATUS -eq $NOT_SUCCESS ]; then
 			MSG="Failed to load tool script configuration"
 			if [ "$TOOL_DBG" == "true" ]; then
 				printf "$DSTA" "$OSSL_TOOL" "$FUNC" "$MSG"
@@ -217,7 +219,7 @@ function __ossl() {
 		declare -A configosslutil=()
 		__loadutilconf $OSSL_UTIL_CFG configosslutil
 		STATUS=$?
-		if [ "$STATUS" -eq "$NOT_SUCCESS" ]; then
+		if [ $STATUS -eq $NOT_SUCCESS ]; then
 			MSG="Failed to load tool script utilities configuration"
 			if [ "$TOOL_DBG" == "true" ]; then
 				printf "$DSTA" "$OSSL_TOOL" "$FUNC" "$MSG"
@@ -228,19 +230,19 @@ function __ossl() {
 		fi
 		__checktool "${configosslutil[OSSL]}"
 		STATUS=$?
-		if [ "$STATUS" -eq "$NOT_SUCCESS" ]; then
+		if [ $STATUS -eq $NOT_SUCCESS ]; then
 			MSG="Missing external tool ${configosslutil[OSSL]}"
 			if [ "${configossl[LOGGING]}" == "true" ]; then
-				LOG[MSG]=$MSG
-				LOG[FLAG]="error"
-				__logging $LOG
+				OSSL_LOGGING[LOG_MSGE]="$MSG"
+				OSSL_LOGGING[LOG_FLAG]="error"
+				__logging OSSL_LOGGING
 			fi
 			if [ "${configossl[EMAILING]}" == "true" ]; then
 				__sendmail "$MSG" "${configossl[ADMIN_EMAIL]}"
 			fi
 			exit 131
 		fi
-		if [ $OPTION == "e" ]; then
+		if [ "$OPTION" == "e" ]; then
 			local TMP_PASSWD=""
 			stty -echo
 			printf "%s" "Enter password: "
@@ -248,15 +250,15 @@ function __ossl() {
 			stty echo
 			__encrypt $FILE $TMP_PASSWD
 			STATUS=$?
-			if [ "$STATUS" -eq "$NOT_SUCCESS" ]; then
+			if [ $STATUS -eq $NOT_SUCCESS ]; then
 				exit 132
 			fi
 			exit 0
-		elif [ $OPTION == "d" ]; then
+		elif [ "$OPTION" == "d" ]; then
 			if [ -f "$FILE" ]; then
 				__decrypt $FILE
 				STATUS=$?
-				if [ "$STATUS" -eq "$NOT_SUCCESS" ]; then
+				if [ $STATUS -eq $NOT_SUCCESS ]; then
 					exit 133
 				fi
 				exit 0
@@ -270,7 +272,7 @@ function __ossl() {
 			exit 134
 		fi
 	fi
-	__usage $OSSL_USAGE
+	__usage OSSL_USAGE
 	exit 128
 }
 
@@ -291,7 +293,7 @@ function __ossl() {
 printf "\n%s\n%s\n\n" "$OSSL_TOOL $OSSL_VERSION" "`date`"
 __checkroot
 STATUS=$?
-if [ "$STATUS" -eq "$SUCCESS" ]; then
+if [ $STATUS -eq $SUCCESS ]; then
 	__ossl $1 $2
 fi
 
