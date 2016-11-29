@@ -19,6 +19,7 @@ UTIL_LOG=$UTIL/log
 . $UTIL/bin/sendmail.sh
 . $UTIL/bin/loadconf.sh
 . $UTIL/bin/loadutilconf.sh
+. $UTIL/bin/progressbar.sh
 
 OSSL_TOOL=ossl
 OSSL_VERSION=ver.1.0
@@ -39,6 +40,12 @@ declare -A OSSL_LOGGING=(
 	[LOG_FLAG]="info"
 	[LOG_PATH]="$OSSL_LOG"
 	[LOG_MSGE]="None"
+)
+
+declare -A PB_STRUCTURE=(
+	[BAR_WIDTH]=50
+	[MAX_PERCENT]=100
+	[SLEEP]=0.01
 )
 
 TOOL_DBG="false"
@@ -86,7 +93,7 @@ function __encrypt() {
             if [ "$TOOL_DBG" == "true" ]; then
 				printf "$DSTA" "$OSSL_TOOL" "$FUNC" "$MSG"
 			else
-				printf "$SEND" "[$OSSL_TOOL]" "$MSG"
+				printf "$SEND" "$OSSL_TOOL" "$MSG"
 			fi
             return $NOT_SUCCESS
         fi
@@ -107,7 +114,7 @@ function __encrypt() {
     if [ "$TOOL_DBG" == "true" ]; then
 		printf "$DSTA" "$OSSL_TOOL" "$FUNC" "$MSG"
 	else
-		printf "$SEND" "[$OSSL_TOOL]" "$MSG"
+		printf "$SEND" "$OSSL_TOOL" "$MSG"
 	fi
     return $NOT_SUCCESS
 }
@@ -154,7 +161,7 @@ function __decrypt() {
 			if [ "$TOOL_DBG" == "true" ]; then
 				printf "$DSTA" "$OSSL_TOOL" "$FUNC" "$MSG"
 			else
-				printf "$SEND" "[$OSSL_TOOL]" "$MSG"
+				printf "$SEND" "$OSSL_TOOL" "$MSG"
 			fi
             return $NOT_SUCCESS
         fi
@@ -175,7 +182,7 @@ function __decrypt() {
     if [ "$TOOL_DBG" == "true" ]; then
 		printf "$DSTA" "$OSSL_TOOL" "$FUNC" "$MSG"
 	else
-		printf "$SEND" "[$OSSL_TOOL]" "$MSG"
+		printf "$SEND" "$OSSL_TOOL" "$MSG"
 	fi
     return $NOT_SUCCESS
 }
@@ -203,7 +210,10 @@ function __ossl() {
 	local FILE=$2
 	if [ -n "$OPTION" ] && [ -n "$FILE" ]; then
 		local FUNC=${FUNCNAME[0]}
-		local MSG=""
+		local MSG="Loading basic and util configuration"
+		printf "$SEND" "$OSSL_TOOL" "$MSG"
+		__progressbar PB_STRUCTURE
+		printf "%s\n\n" ""
 		declare -A configossl=()
 		__loadconf $OSSL_CFG configossl
 		local STATUS=$?
@@ -212,7 +222,7 @@ function __ossl() {
 			if [ "$TOOL_DBG" == "true" ]; then
 				printf "$DSTA" "$OSSL_TOOL" "$FUNC" "$MSG"
 			else
-				printf "$SEND" "[$OSSL_TOOL]" "$MSG"
+				printf "$SEND" "$OSSL_TOOL" "$MSG"
 			fi
 			exit 129
 		fi
@@ -224,7 +234,7 @@ function __ossl() {
 			if [ "$TOOL_DBG" == "true" ]; then
 				printf "$DSTA" "$OSSL_TOOL" "$FUNC" "$MSG"
 			else
-				printf "$SEND" "[$OSSL_TOOL]" "$MSG"
+				printf "$SEND" "$OSSL_TOOL" "$MSG"
 			fi
 			exit 130
 		fi
@@ -253,6 +263,7 @@ function __ossl() {
 			if [ $STATUS -eq $NOT_SUCCESS ]; then
 				exit 132
 			fi
+			printf "\n\n$SEND" "$OSSL_TOOL" "Done"
 			exit 0
 		elif [ "$OPTION" == "d" ]; then
 			if [ -f "$FILE" ]; then
@@ -261,13 +272,14 @@ function __ossl() {
 				if [ $STATUS -eq $NOT_SUCCESS ]; then
 					exit 133
 				fi
+				printf "\n\n$SEND" "$OSSL_TOOL" "Done"
 				exit 0
 			fi
 			MSG="Missing target file $FILE"
 			if [ "$TOOL_DBG" == "true" ]; then
 				printf "$DSTA" "$OSSL_TOOL" "$FUNC" "$MSG"
 			else
-				printf "$SEND" "[$OSSL_TOOL]" "$MSG"
+				printf "$SEND" "$OSSL_TOOL" "$MSG"
 			fi
 			exit 134
 		fi
