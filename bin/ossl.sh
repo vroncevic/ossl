@@ -244,10 +244,10 @@ function __ossl() {
 		fi
 		if [ "$OPTION" == "e" ]; then
 			local TMP_PASSWD=""
-			stty -echo
-			printf "%s" "Enter password: "
-			read TMP_PASSWD
-			stty echo
+			while read -s -p 'Enter password: ' TMP_PASSWD && [[ -z "$TMP_PASSWD" ]]
+			do
+				printf "%s" "Please, no blank passwords!"
+			done
 			__encrypt $FILE $TMP_PASSWD
 			STATUS=$?
 			if [ $STATUS -eq $NOT_SUCCESS ]; then
