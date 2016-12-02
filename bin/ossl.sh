@@ -76,7 +76,7 @@ function __encrypt() {
     local INPUT_FILE=$1
     local PASSWORD=$2
 	local FUNC=${FUNCNAME[0]}
-	local MSG=""
+	local MSG="None"
     if [ -n "$INPUT_FILE" ] && [ -n "$PASSWORD" ]; then
         if [ -f "$INPUT_FILE" ]; then
             local ROOT_CMD="${configosslutil[OSSL]} ${configosslutil[OSSL_ALG]}"
@@ -145,7 +145,7 @@ function __encrypt() {
 function __decrypt() {
     local INPUT_FILE=$1
     local FUNC=${FUNCNAME[0]}
-	local MSG=""
+	local MSG="None"
     if [ -n "$INPUT_FILE" ]; then
         if [ -f "$INPUT_FILE" ]; then
 			local ROOT_CMD="${configosslutil[OSSL]} ${configosslutil[OSSL_ALG]}"
