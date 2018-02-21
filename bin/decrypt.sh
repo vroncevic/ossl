@@ -8,10 +8,10 @@
 #
 
 declare -A OSSL_DECRYPT_USAGE=(
-	[USAGE_TOOL]="__decrypt"
-	[USAGE_ARG1]="[FILE] Target file"
-	[USAGE_EX_PRE]="# Decrypt target file"
-	[USAGE_EX]="__decrypt /opt/origin.aes"
+    [USAGE_TOOL]="__decrypt"
+    [USAGE_ARG1]="[FILE] Target file"
+    [USAGE_EX_PRE]="# Decrypt target file"
+    [USAGE_EX]="__decrypt /opt/origin.aes"
 )
 
 #
@@ -26,35 +26,36 @@ declare -A OSSL_DECRYPT_USAGE=(
 # local STATUS=$?
 #
 # if [ $STATUS -eq $SUCCESS ]; then
-#	# true
-#	# notify admin | user
+#    # true
+#    # notify admin | user
 # else
-#	# false
-#	# missing argument | missing file
-#	# return $NOT_SUCCESS
-#	# or
-#	# exit 128
+#    # false
+#    # missing argument | missing file
+#    # return $NOT_SUCCESS
+#    # or
+#    # exit 128
 # fi
 #
-function __decrypt() {
-	local INF=$1 FUNC=${FUNCNAME[0]} MSG="None"
-	if [ -n "${INF}" ]; then
-		MSG="Decrypt file [${INF}]"
-		__info_debug_message "$MSG" "$FUNC" "$OSSL_TOOL"
-		if [ -f "${INF}" ]; then
-			local OSSLT=${config_ossl_util[OSSL]}
-			local OSSLA=${config_ossl_util[OSSL_ALG]} IN_FILE="-salt -in ${INF}"
-			eval "${OSSLT} ${OSSLA} -d ${IN_FILE}"
-			__info_debug_message_end "Done" "$FUNC" "$OSSL_TOOL"
-			return $SUCCESS
-		fi
-		MSG="Check file [${INF}]"
-		__info_debug_message "$MSG" "$FUNC" "$OSSL_TOOL"
-		MSG="Force exit!"
-		__info_debug_message-end "$MSG" "$FUNC" "$OSSL_TOOL"
-		return $NOT_SUCCESS
-	fi
-	__usage OSSL_DECRYPT_USAGE
-	return $NOT_SUCCESS
+function __decrypt {
+    local INF=$1 FUNC=${FUNCNAME[0]} MSG="None"
+    if [ -n "${INF}" ]; then
+        MSG="Decrypt file [${INF}]"
+        info_debug_message "$MSG" "$FUNC" "$OSSL_TOOL"
+        if [ -f "${INF}" ]; then
+            local OSSLT=${config_ossl_util[OSSL]}
+            local OSSLA=${config_ossl_util[OSSL_ALG]}
+            local IN_FILE="-salt -in ${INF}"
+            eval "${OSSLT} ${OSSLA} -d ${IN_FILE}"
+            info_debug_message_end "Done" "$FUNC" "$OSSL_TOOL"
+            return $SUCCESS
+        fi
+        MSG="Check file [${INF}]"
+        info_debug_message "$MSG" "$FUNC" "$OSSL_TOOL"
+        MSG="Force exit!"
+        info_debug_message-end "$MSG" "$FUNC" "$OSSL_TOOL"
+        return $NOT_SUCCESS
+    fi
+    usage OSSL_DECRYPT_USAGE
+    return $NOT_SUCCESS
 }
 
