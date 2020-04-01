@@ -1,7 +1,7 @@
 #!/bin/bash
 #
 # @brief   Encrypt target file
-# @version ver.1.0
+# @version ver.1.0.0
 # @date    Thu Feb 07 00:46:32 2016
 # @company Frobas IT Department, www.frobas.com 2016
 # @author  Vladimir Roncevic <vladimir.roncevic@frobas.com>
