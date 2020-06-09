@@ -1,8 +1,8 @@
 # Encrypting/Decrypting files.
 
-ossl is shell tool for control/operating with openssl.
+***ossl*** is shell tool for operating openssl.
 
-Developed in bash code: 100%.
+Developed in bash code: ***100%***.
 
 The README is used to introduce the tool and provide instructions on
 how to install the tool, any machine dependencies it may have and any
@@ -10,6 +10,17 @@ other information that should be provided before the tool is installed.
 
 [![GitHub issues open](https://img.shields.io/github/issues/vroncevic/ossl.svg)](https://github.com/vroncevic/ossl/issues)
  [![GitHub contributors](https://img.shields.io/github/contributors/vroncevic/ossl.svg)](https://github.com/vroncevic/ossl/graphs/contributors)
+
+<!-- START doctoc -->
+**Table of Contents**
+
+- [Installation](https://github.com/vroncevic/ossl#installation)
+- [Usage](https://github.com/vroncevic/ossl#usage)
+- [Dependencies](https://github.com/vroncevic/ossl#dependencies)
+- [Shell tool structure](https://github.com/vroncevic/ossl#shell-tool-structure)
+- [Docs](https://github.com/vroncevic/ossl#docs)
+- [Copyright and Licence](https://github.com/vroncevic/ossl#copyright-and-licence)
+<!-- END doctoc -->
 
 ### INSTALLATION
 
@@ -24,10 +35,9 @@ cp -R ~/sh_tool/bin/   /root/scripts/ossl/ver.1.0/
 cp -R ~/sh_tool/conf/  /root/scripts/ossl/ver.1.0/
 cp -R ~/sh_tool/log/   /root/scripts/ossl/ver.1.0/
 ```
+![alt tag](https://raw.githubusercontent.com/vroncevic/ossl/dev/docs/setup_tree.png)
 
 Or You can use docker to create image/container.
-
-:sparkles:
 
 ### USAGE
 
@@ -50,7 +60,7 @@ This tool requires these other modules and libraries:
 
 ### SHELL TOOL STRUCTURE
 
-ossl is based on MOP.
+***ossl*** is based on MOP.
 
 Shell tool structure:
 ```
@@ -74,8 +84,6 @@ More documentation and info at:
 
 * https://ossl.readthedocs.io/en/latest/
 
-:sparkles:
-
 ### COPYRIGHT AND LICENCE
 
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0) [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
@@ -85,6 +93,4 @@ Copyright (C) 2018 by http://vroncevic.github.io/ossl
 This tool is free software; you can redistribute it and/or modify
 it under the same terms as Bash itself, either Bash version 4.2.47 or,
 at your option, any later version of Bash 4 you may have available.
-
-:sparkles:
 
