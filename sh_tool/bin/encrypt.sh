@@ -7,12 +7,12 @@
 # @author  Vladimir Roncevic <vladimir.roncevic@frobas.com>
 #
 
-declare -A OSSL_ENCRYPT_USAGE=(
-    [USAGE_TOOL]="__encrypt"
-    [USAGE_ARG1]="[FILE] Target file"
-    [USAGE_ARG2]="[PASSWORD] Password"
-    [USAGE_EX_PRE]="# Encrypt target file"
-    [USAGE_EX]="__encrypt /opt/origin.txt \$PASS"
+declare -A OSSL_ENCRYPT_Usage=(
+    [Usage_TOOL]="__encrypt"
+    [Usage_ARG1]="[FILE] Target file"
+    [Usage_ARG2]="[PASSWORD] Password"
+    [Usage_EX_PRE]="# Encrypt target file"
+    [Usage_EX]="__encrypt /opt/origin.txt \$PASS"
 )
 
 #
@@ -58,7 +58,7 @@ function __encrypt {
         info_debug_message_end "$MSG" "$FUNC" "$OSSL_TOOL"
         return $NOT_SUCCESS
     fi
-    usage OSSL_ENCRYPT_USAGE
+    usage OSSL_ENCRYPT_Usage
     return $NOT_SUCCESS
 }
 

@@ -7,11 +7,11 @@
 # @author  Vladimir Roncevic <vladimir.roncevic@frobas.com>
 #
 
-declare -A OSSL_DECRYPT_USAGE=(
-    [USAGE_TOOL]="__decrypt"
-    [USAGE_ARG1]="[FILE] Target file"
-    [USAGE_EX_PRE]="# Decrypt target file"
-    [USAGE_EX]="__decrypt /opt/origin.aes"
+declare -A OSSL_DECRYPT_Usage=(
+    [Usage_TOOL]="__decrypt"
+    [Usage_ARG1]="[FILE] Target file"
+    [Usage_EX_PRE]="# Decrypt target file"
+    [Usage_EX]="__decrypt /opt/origin.aes"
 )
 
 #
@@ -55,7 +55,7 @@ function __decrypt {
         info_debug_message-end "$MSG" "$FUNC" "$OSSL_TOOL"
         return $NOT_SUCCESS
     fi
-    usage OSSL_DECRYPT_USAGE
+    usage OSSL_DECRYPT_Usage
     return $NOT_SUCCESS
 }
 

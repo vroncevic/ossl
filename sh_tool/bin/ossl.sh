@@ -31,12 +31,12 @@ OSSL_LOG=${OSSL_HOME}/log
 .    ${OSSL_HOME}/bin/encrypt.sh
 .    ${OSSL_HOME}/bin/decrypt.sh
 
-declare -A OSSL_USAGE=(
-    [USAGE_TOOL]="${OSSL_TOOL}"
-    [USAGE_ARG1]="[OPERATION] enc | dec (encrypt | decrypt)"
-    [USAGE_ARG2]="[TARGET FILE] File path"
-    [USAGE_EX_PRE]="# Encrypt target file"
-    [USAGE_EX]="${OSSL_TOOL} enc /opt/origin.txt"
+declare -A OSSL_Usage=(
+    [Usage_TOOL]="${OSSL_TOOL}"
+    [Usage_ARG1]="[OPERATION] enc | dec (encrypt | decrypt)"
+    [Usage_ARG2]="[TARGET FILE] File path"
+    [Usage_EX_PRE]="# Encrypt target file"
+    [Usage_EX]="${OSSL_TOOL} enc /opt/origin.txt"
 )
 
 declare -A OSSL_LOGGING=(
@@ -160,7 +160,7 @@ function __ossl {
         info_debug_message_end "$MSG" "$FUNC" "$OSSL_TOOL"
         exit 132
     fi
-    usage OSSL_USAGE
+    usage OSSL_Usage
     exit 128
 }
 
