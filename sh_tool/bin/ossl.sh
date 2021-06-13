@@ -1,7 +1,7 @@
 #!/bin/bash
 #
 # @brief   Encrypt | decrypt target file with tool openssl
-# @version ver.1.0.0
+# @version ver.1.0
 # @date    Thu Feb 07 00:46:32 2016
 # @company Frobas IT Department, www.frobas.com 2016
 # @author  Vladimir Roncevic <vladimir.roncevic@frobas.com>
@@ -31,7 +31,7 @@ OSSL_LOG=${OSSL_HOME}/log
 .    ${OSSL_HOME}/bin/encrypt.sh
 .    ${OSSL_HOME}/bin/decrypt.sh
 
-declare -A OSSL_Usage=(
+declare -A OSSL_USAGE=(
     [Usage_TOOL]="${OSSL_TOOL}"
     [Usage_ARG1]="[OPERATION] enc | dec (encrypt | decrypt)"
     [Usage_ARG2]="[TARGET FILE] File path"
@@ -160,7 +160,7 @@ function __ossl {
         info_debug_message_end "$MSG" "$FUNC" "$OSSL_TOOL"
         exit 132
     fi
-    usage OSSL_Usage
+    usage OSSL_USAGE
     exit 128
 }
 

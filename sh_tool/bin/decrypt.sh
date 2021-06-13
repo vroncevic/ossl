@@ -1,13 +1,13 @@
 #!/bin/bash
 #
 # @brief   Decrypt target file
-# @version ver.1.0.0
+# @version ver.1.0
 # @date    Thu Feb 07 00:46:32 2016
 # @company Frobas IT Department, www.frobas.com 2016
 # @author  Vladimir Roncevic <vladimir.roncevic@frobas.com>
 #
 
-declare -A OSSL_DECRYPT_Usage=(
+declare -A OSSL_DECRYPT_USAGE=(
     [Usage_TOOL]="__decrypt"
     [Usage_ARG1]="[FILE] Target file"
     [Usage_EX_PRE]="# Decrypt target file"
@@ -55,7 +55,7 @@ function __decrypt {
         info_debug_message-end "$MSG" "$FUNC" "$OSSL_TOOL"
         return $NOT_SUCCESS
     fi
-    usage OSSL_DECRYPT_Usage
+    usage OSSL_DECRYPT_USAGE
     return $NOT_SUCCESS
 }
 

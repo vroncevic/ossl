@@ -1,3 +1,5 @@
+<img align="right" src="https://raw.githubusercontent.com/vroncevic/ossl/dev/docs/ossl_logo.png" width="25%">
+
 # Encrypting/Decrypting files
 
 **ossl** is shell tool for operating openssl.
@@ -32,11 +34,11 @@ Navigate to release **[page](https://github.com/vroncevic/ossl/releases)** downl
 To install **ossl** type the following:
 
 ```
-tar xvzf ossl-x.y.z.tar.gz
-cd ossl-x.y.z
-cp -R ~/sh_tool/bin/   /root/scripts/ossl/ver.1.0/
-cp -R ~/sh_tool/conf/  /root/scripts/ossl/ver.1.0/
-cp -R ~/sh_tool/log/   /root/scripts/ossl/ver.1.0/
+tar xvzf ossl-x.y.tar.gz
+cd ossl-x.y
+cp -R ~/sh_tool/bin/   /root/scripts/ossl/ver.x.y/
+cp -R ~/sh_tool/conf/  /root/scripts/ossl/ver.x.y/
+cp -R ~/sh_tool/log/   /root/scripts/ossl/ver.x.y/
 ```
 ![alt tag](https://raw.githubusercontent.com/vroncevic/ossl/dev/docs/setup_tree.png)
 
@@ -48,7 +50,7 @@ Or You can use docker to create image/container.
 
 ```
 # Create symlink for shell tool
-ln -s /root/scripts/ossl/ver.1.0/bin/ossl.sh /root/bin/ossl
+ln -s /root/scripts/ossl/ver.x.y/bin/ossl.sh /root/bin/ossl
 
 # Setting PATH
 export PATH=${PATH}:/root/bin/
@@ -60,7 +62,7 @@ ossl enc /opt/origin.txt
 ### Dependencies
 
 **ossl** requires next modules and libraries:
-* sh_util [https://github.com/vroncevic/sh_util](https://github.com/vroncevic/sh_util)
+* ossl [https://github.com/vroncevic/ossl](https://github.com/vroncevic/ossl)
 
 ### Shell tool structure
 
@@ -68,7 +70,7 @@ ossl enc /opt/origin.txt
 
 Code structure:
 ```
-.
+sh_tool/
 ├── bin/
 │   ├── decrypt.sh
 │   ├── encrypt.sh
