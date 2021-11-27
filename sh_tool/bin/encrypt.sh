@@ -1,18 +1,18 @@
 #!/bin/bash
 #
-# @brief   Encrypt target file
+# @brief   Encrypt | decrypt target file with tool openssl
 # @version ver.1.0
-# @date    Thu Feb 07 00:46:32 2016
-# @company Frobas IT Department, www.frobas.com 2016
+# @date    Sat 27 Nov 2021 07:58:38 PM CET
+# @company None, free software to use 2016
 # @author  Vladimir Roncevic <vladimir.roncevic@frobas.com>
 #
 
 declare -A OSSL_ENCRYPT_USAGE=(
-    [Usage_TOOL]="__encrypt"
-    [Usage_ARG1]="[FILE] Target file"
-    [Usage_ARG2]="[PASSWORD] Password"
-    [Usage_EX_PRE]="# Encrypt target file"
-    [Usage_EX]="__encrypt /opt/origin.txt \$PASS"
+    [USAGE_TOOL]="__encrypt"
+    [USAGE_ARG1]="[FILE] Target file"
+    [USAGE_ARG2]="[PASSWORD] Password"
+    [USAGE_EX_PRE]="# Encrypt target file"
+    [USAGE_EX]="__encrypt /opt/origin.txt \$PASS"
 )
 
 #

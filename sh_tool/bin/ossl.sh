@@ -2,8 +2,8 @@
 #
 # @brief   Encrypt | decrypt target file with tool openssl
 # @version ver.1.0
-# @date    Thu Feb 07 00:46:32 2016
-# @company Frobas IT Department, www.frobas.com 2016
+# @date    Sat 27 Nov 2021 07:58:38 PM CET
+# @company None, free software to use 2016
 # @author  Vladimir Roncevic <vladimir.roncevic@frobas.com>
 #
 UTIL_ROOT=/root/scripts
@@ -22,12 +22,18 @@ UTIL_LOG=${UTIL}/log
 .    ${UTIL}/bin/progress_bar.sh
 
 OSSL_TOOL=ossl
-OSSL_VERSION=ver.1.0
+OSSL_VERSION=ver.2.0
 OSSL_HOME=${UTIL_ROOT}/${OSSL_TOOL}/${OSSL_VERSION}
 OSSL_CFG=${OSSL_HOME}/conf/${OSSL_TOOL}.cfg
 OSSL_UTIL_CFG=${OSSL_HOME}/conf/${OSSL_TOOL}_util.cfg
+OSSL_LOGO=${OSSL_HOME}/conf/${OSSL_TOOL}.logo
 OSSL_LOG=${OSSL_HOME}/log
 
+tabs 4
+CONSOLE_WIDTH=$(stty size | awk '{print $2}')
+
+.    ${OSSL_HOME}/bin/center.sh
+.    ${OSSL_HOME}/bin/display_logo.sh
 .    ${OSSL_HOME}/bin/encrypt.sh
 .    ${OSSL_HOME}/bin/decrypt.sh
 
@@ -76,6 +82,7 @@ TOOL_NOTIFY="false"
 #
 function __ossl {
     local OP=$1 FILE=$2
+    display_logo
     if [[ -n "${OP}" && -n "${FILE}" ]]; then
         local FUNC=${FUNCNAME[0]} MSG="None"
         local STATUS_CONF STATUS_CONF_UTIL STATUS
@@ -186,4 +193,3 @@ if [ $STATUS -eq $SUCCESS ]; then
 fi
 
 exit 127
-
