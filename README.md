@@ -89,6 +89,55 @@ export PATH=${PATH}:/root/bin/
 
 # Encrypt file
 ossl enc /opt/origin.txt
+
+ossl ver.2.0
+Sat 27 Nov 2021 08:17:16 PM CET
+
+[check_root] Check permission for current session? [ok]
+[check_root] Done
+
+	                 
+	               _ 
+	  ___  ___ ___| |
+	 / _ \/ __/ __| |
+	| (_) \__ \__ \ |
+	 \___/|___/___/_|
+	                 
+	Info   github.io/ossl ver.2.0 
+	Issue  github.io/issue
+	Author vroncevic.github.io
+
+[ossl] Loading basic and util configuration!
+100% [================================================]
+
+[load_conf] Loading App/Tool/Script configuration!
+[check_cfg] Checking configuration file [/root/scripts/ossl/ver.2.0/conf/ossl.cfg] [ok]
+[check_cfg] Done
+
+[load_conf] Done
+
+[load_util_conf] Load module configuration!
+[check_cfg] Checking configuration file [/root/scripts/ossl/ver.2.0/conf/ossl_util.cfg] [ok]
+[check_cfg] Done
+
+[load_util_conf] Done
+
+[check_op] Checking operation [enc]? [ok]
+[check_op] Done
+
+[check_tool] Checking tool [/usr/bin/openssl]? [ok]
+[check_tool] Done
+
+[ossl] Checking file [/opt/origin.txt]? [ok]
+Type password: [ossl] Encrypt file [/opt/origin.txt]
+[ossl] Encrypted file: -salt -in /opt/origin.txt > -out /opt/origin.txt.aes
+[ossl] Done
+
+[logging] Checking directory [/root/scripts/ossl/ver.2.0/log/]? [ok]
+[logging] Write info log!
+[logging] Done
+
+[ossl] Done
 ```
 
 ### Dependencies
