@@ -29,9 +29,11 @@ other information that should be provided before the tool is installed.
 
 ### Installation
 
+![Debian Linux OS](https://raw.githubusercontent.com/vroncevic/ossl/dev/docs/debtux.png)
+
 Navigate to release **[page](https://github.com/vroncevic/ossl/releases)** download and extract release archive.
 
-To install **ossl** type the following:
+To install **ossl** type the following
 
 ```
 tar xvzf ossl-x.y.tar.gz
@@ -40,7 +42,37 @@ cp -R ~/sh_tool/bin/   /root/scripts/ossl/ver.x.y/
 cp -R ~/sh_tool/conf/  /root/scripts/ossl/ver.x.y/
 cp -R ~/sh_tool/log/   /root/scripts/ossl/ver.x.y/
 ```
-![alt tag](https://raw.githubusercontent.com/vroncevic/ossl/dev/docs/setup_tree.png)
+
+Self generated setup script and execution
+```
+./ossl_setup.sh 
+
+[setup] installing App/Tool/Script ossl
+	Sat 27 Nov 2021 08:07:11 PM CET
+[setup] clean up App/Tool/Script structure
+[setup] copy App/Tool/Script structure
+[setup] remove github editor configuration files
+[setup] set App/Tool/Script permission
+[setup] create symbolic link of App/Tool/Script
+[setup] done
+
+/root/scripts/ossl/ver.2.0/
+├── bin/
+│   ├── center.sh
+│   ├── decrypt.sh
+│   ├── display_logo.sh
+│   ├── encrypt.sh
+│   └── ossl.sh
+├── conf/
+│   ├── ossl.cfg
+│   ├── ossl.logo
+│   └── ossl_util.cfg
+└── log/
+    └── ossl.log
+
+3 directories, 9 files
+lrwxrwxrwx 1 root root 38 Nov 27 20:07 /root/bin/ossl -> /root/scripts/ossl/ver.2.0/bin/ossl.sh
+```
 
 Or You can use docker to create image/container.
 
@@ -61,22 +93,25 @@ ossl enc /opt/origin.txt
 
 ### Dependencies
 
-**ossl** requires next modules and libraries:
-* ossl [https://github.com/vroncevic/ossl](https://github.com/vroncevic/ossl)
+**ossl** requires next modules and libraries
+* sh_util [https://github.com/vroncevic/sh_util](https://github.com/vroncevic/sh_util)
 
 ### Shell tool structure
 
 **ossl** is based on MOP.
 
-Code structure:
+Shell tool structure
 ```
 sh_tool/
 ├── bin/
+│   ├── center.sh
 │   ├── decrypt.sh
+│   ├── display_logo.sh
 │   ├── encrypt.sh
 │   └── ossl.sh
 ├── conf/
 │   ├── ossl.cfg
+│   ├── ossl.logo
 │   └── ossl_util.cfg
 └── log/
     └── ossl.log
@@ -86,7 +121,7 @@ sh_tool/
 
 [![Documentation Status](https://readthedocs.org/projects/ossl/badge/?version=latest)](https://ossl.readthedocs.io/projects/ossl/en/latest/?badge=latest)
 
-More documentation and info at:
+More documentation and info at
 * [https://ossl.readthedocs.io/en/latest/](https://ossl.readthedocs.io/en/latest/)
 * [https://www.gnu.org/software/bash/manual/](https://www.gnu.org/software/bash/manual/)
 

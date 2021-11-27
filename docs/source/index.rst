@@ -33,11 +33,16 @@ other information that should be provided before the tool is installed.
 Installation
 -------------
 
+|Debian Linux OS|
+
+.. |Debian Linux OS| image:: https://raw.githubusercontent.com/vroncevic/ossl/dev/docs/debtux.png
+   :target: https://www.debian.org
+
 Navigate to release `page`_ download and extract release archive.
 
 .. _page: https://github.com/vroncevic/ossl/releases
 
-To install **ossl** type the following:
+To install **ossl** type the following
 
 .. code-block:: bash
 
@@ -57,7 +62,7 @@ Or You can use Docker to create image/container.
 Dependencies
 -------------
 
-**ossl** requires next modules and libraries:
+**ossl** requires next modules and libraries
 
 * sh_util `https://github.com/vroncevic/sh_util <https://github.com/vroncevic/sh_util>`_
 
@@ -66,17 +71,20 @@ Shell tool structure
 
 **ossl** is based on MOP.
 
-Code structure:
+Shell tool structure
 
 .. code-block:: bash
 
    sh_tool/
    ├── bin/
+   │   ├── center.sh
    │   ├── decrypt.sh
+   │   ├── display_logo.sh
    │   ├── encrypt.sh
    │   └── ossl.sh
    ├── conf/
    │   ├── ossl.cfg
+   │   ├── ossl.logo
    │   └── ossl_util.cfg
    └── log/
        └── ossl.log
