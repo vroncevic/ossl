@@ -22,7 +22,7 @@ UTIL_LOG=${UTIL}/log
 .    ${UTIL}/bin/progress_bar.sh
 
 OSSL_TOOL=ossl
-OSSL_VERSION=ver.2.0
+OSSL_VERSION=ver.1.0
 OSSL_HOME=${UTIL_ROOT}/${OSSL_TOOL}/${OSSL_VERSION}
 OSSL_CFG=${OSSL_HOME}/conf/${OSSL_TOOL}.cfg
 OSSL_UTIL_CFG=${OSSL_HOME}/conf/${OSSL_TOOL}_util.cfg

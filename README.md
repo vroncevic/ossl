@@ -6,7 +6,7 @@
 
 Developed in **[bash](https://en.wikipedia.org/wiki/Bash_(Unix_shell))** code: **100%**.
 
-[![ossl shell checker](https://github.com/vroncevic/ossl/workflows/ossl%20shell%20checker/badge.svg)](https://github.com/vroncevic/ossl/actions?query=workflow%3A%22ossl+shell+checker%22)
+[![ossl_shell_checker](https://github.com/vroncevic/ossl/actions/workflows/ossl_shell_checker.yml/badge.svg)](https://github.com/vroncevic/ossl/actions/workflows/ossl_shell_checker.yml)
 
 The README is used to introduce the tool and provide instructions on
 how to install the tool, any machine dependencies it may have and any
@@ -56,7 +56,7 @@ Self generated setup script and execution
 [setup] create symbolic link of App/Tool/Script
 [setup] done
 
-/root/scripts/ossl/ver.2.0/
+/root/scripts/ossl/ver.1.0/
 ├── bin/
 │   ├── center.sh
 │   ├── decrypt.sh
@@ -71,12 +71,10 @@ Self generated setup script and execution
     └── ossl.log
 
 3 directories, 9 files
-lrwxrwxrwx 1 root root 38 Nov 27 20:07 /root/bin/ossl -> /root/scripts/ossl/ver.2.0/bin/ossl.sh
+lrwxrwxrwx 1 root root 38 Nov 27 20:07 /root/bin/ossl -> /root/scripts/ossl/ver.1.0/bin/ossl.sh
 ```
 
 Or You can use docker to create image/container.
-
-[![ossl docker checker](https://github.com/vroncevic/ossl/workflows/ossl%20docker%20checker/badge.svg)](https://github.com/vroncevic/ossl/actions?query=workflow%3A%22ossl+docker+checker%22)
 
 ### Usage
 
@@ -90,20 +88,25 @@ export PATH=${PATH}:/root/bin/
 # Encrypt file
 ossl enc /opt/origin.txt
 
-ossl ver.2.0
+ossl ver.1.0
 Sat 27 Nov 2021 08:17:16 PM CET
 
 [check_root] Check permission for current session? [ok]
 [check_root] Done
 
+                                 
+                             ██  
+                            ░██  
+    ██████   ██████  ██████ ░██  
+   ██░░░░██ ██░░░░  ██░░░░  ░██  
+  ░██   ░██░░█████ ░░█████  ░██  
+  ░██   ░██ ░░░░░██ ░░░░░██ ░██  
+  ░░██████  ██████  ██████  ███  
+   ░░░░░░  ░░░░░░  ░░░░░░  ░░░   
+                                 
+
 	                 
-	               _ 
-	  ___  ___ ___| |
-	 / _ \/ __/ __| |
-	| (_) \__ \__ \ |
-	 \___/|___/___/_|
-	                 
-	Info   github.io/ossl ver.2.0 
+	Info   github.io/ossl ver.1.0 
 	Issue  github.io/issue
 	Author vroncevic.github.io
 
@@ -111,13 +114,13 @@ Sat 27 Nov 2021 08:17:16 PM CET
 100% [================================================]
 
 [load_conf] Loading App/Tool/Script configuration!
-[check_cfg] Checking configuration file [/root/scripts/ossl/ver.2.0/conf/ossl.cfg] [ok]
+[check_cfg] Checking configuration file [/root/scripts/ossl/ver.1.0/conf/ossl.cfg] [ok]
 [check_cfg] Done
 
 [load_conf] Done
 
 [load_util_conf] Load module configuration!
-[check_cfg] Checking configuration file [/root/scripts/ossl/ver.2.0/conf/ossl_util.cfg] [ok]
+[check_cfg] Checking configuration file [/root/scripts/ossl/ver.1.0/conf/ossl_util.cfg] [ok]
 [check_cfg] Done
 
 [load_util_conf] Done
@@ -133,7 +136,7 @@ Type password: [ossl] Encrypt file [/opt/origin.txt]
 [ossl] Encrypted file: -salt -in /opt/origin.txt > -out /opt/origin.txt.aes
 [ossl] Done
 
-[logging] Checking directory [/root/scripts/ossl/ver.2.0/log/]? [ok]
+[logging] Checking directory [/root/scripts/ossl/ver.1.0/log/]? [ok]
 [logging] Write info log!
 [logging] Done
 
@@ -178,7 +181,7 @@ More documentation and info at
 
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0) [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
-Copyright (C) 2016 by [vroncevic.github.io/ossl](https://vroncevic.github.io/ossl)
+Copyright (C) 2016 - 2024 by [vroncevic.github.io/ossl](https://vroncevic.github.io/ossl)
 
 **ossl** is free software; you can redistribute it and/or modify
 it under the same terms as Bash itself, either Bash version 4.2.47 or,
