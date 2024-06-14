@@ -1,6 +1,6 @@
-<img align="right" src="https://raw.githubusercontent.com/vroncevic/ossl/dev/docs/ossl_logo.png" width="25%">
-
 # Encrypting/Decrypting files
+
+<img align="right" src="https://raw.githubusercontent.com/vroncevic/ossl/dev/docs/ossl_logo.png" width="25%">
 
 **ossl** is shell tool for operating openssl.
 
@@ -35,7 +35,7 @@ Navigate to release **[page](https://github.com/vroncevic/ossl/releases)** downl
 
 To install **ossl** type the following
 
-```
+```bash
 tar xvzf ossl-x.y.tar.gz
 cd ossl-x.y
 cp -R ~/sh_tool/bin/   /root/scripts/ossl/ver.x.y/
@@ -44,7 +44,8 @@ cp -R ~/sh_tool/log/   /root/scripts/ossl/ver.x.y/
 ```
 
 Self generated setup script and execution
-```
+
+```bash
 ./ossl_setup.sh 
 
 [setup] installing App/Tool/Script ossl
@@ -78,7 +79,7 @@ Or You can use docker to create image/container.
 
 ### Usage
 
-```
+```bash
 # Create symlink for shell tool
 ln -s /root/scripts/ossl/ver.x.y/bin/ossl.sh /root/bin/ossl
 
@@ -153,7 +154,8 @@ Type password: [ossl] Encrypt file [/opt/origin.txt]
 **ossl** is based on MOP.
 
 Shell tool structure
-```
+
+```bash
 sh_tool/
 ├── bin/
 │   ├── center.sh
