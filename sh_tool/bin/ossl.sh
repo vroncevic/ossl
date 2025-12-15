@@ -11,8 +11,6 @@ UTIL_VERSION=ver.1.0
 UTIL=${UTIL_ROOT}/sh_util/${UTIL_VERSION}
 UTIL_LOG=${UTIL}/log
 
-.    ${UTIL}/bin/devel.sh
-.    ${UTIL}/bin/usage.sh
 .    ${UTIL}/bin/check_root.sh
 .    ${UTIL}/bin/check_tool.sh
 .    ${UTIL}/bin/check_op.sh
@@ -20,22 +18,15 @@ UTIL_LOG=${UTIL}/log
 .    ${UTIL}/bin/load_conf.sh
 .    ${UTIL}/bin/load_util_conf.sh
 .    ${UTIL}/bin/progress_bar.sh
+.    ${UTIL}/bin/display_logo.sh
 
 OSSL_TOOL=ossl
-OSSL_VERSION=ver.1.0
+OSSL_VERSION=ver.3.0
 OSSL_HOME=${UTIL_ROOT}/${OSSL_TOOL}/${OSSL_VERSION}
 OSSL_CFG=${OSSL_HOME}/conf/${OSSL_TOOL}.cfg
 OSSL_UTIL_CFG=${OSSL_HOME}/conf/${OSSL_TOOL}_util.cfg
 OSSL_LOGO=${OSSL_HOME}/conf/${OSSL_TOOL}.logo
 OSSL_LOG=${OSSL_HOME}/log
-
-tabs 4
-CONSOLE_WIDTH=$(stty size | awk '{print $2}')
-
-.    ${OSSL_HOME}/bin/center.sh
-.    ${OSSL_HOME}/bin/display_logo.sh
-.    ${OSSL_HOME}/bin/encrypt.sh
-.    ${OSSL_HOME}/bin/decrypt.sh
 
 declare -A OSSL_USAGE=(
     [Usage_TOOL]="${OSSL_TOOL}"
@@ -56,6 +47,13 @@ declare -A PB_STRUCTURE=(
     [BW]=50
     [MP]=100
     [SLEEP]=0.01
+)
+
+declare -A OSSL_LOGO_DATA=(
+    [OWNER]="vroncevic"
+    [REPO]="${OSSL_TOOL}"
+    [VERSION]="${OSSL_VERSION}"
+    [LOGO]="${OSSL_LOGO}"
 )
 
 TOOL_DBG="false"
@@ -82,93 +80,99 @@ TOOL_NOTIFY="false"
 #
 function __ossl {
     local OP=$1 FILE=$2
-    display_logo
-    if [[ -n "${OP}" && -n "${FILE}" ]]; then
-        local FUNC=${FUNCNAME[0]} MSG="None"
-        local STATUS_CONF STATUS_CONF_UTIL STATUS
-        MSG="Loading basic and util configuration!"
-        info_debug_message "$MSG" "$FUNC" "$OSSL_TOOL"
-        progress_bar PB_STRUCTURE
-        declare -A config_ossl=()
-        load_conf "$OSSL_CFG" config_ossl
-        STATUS_CONF=$?
-        declare -A config_ossl_util=()
-        load_util_conf "$OSSL_UTIL_CFG" config_ossl_util
-        STATUS_CONF_UTIL=$?
-        declare -A STATUS_STRUCTURE=([1]=$STATUS_CONF [2]=$STATUS_CONF_UTIL)
-        check_status STATUS_STRUCTURE
-        STATUS=$?
-        if [ $STATUS -eq $NOT_SUCCESS ]; then
-            MSG="Force exit!"
-            info_debug_message_end "$MSG" "$FUNC" "$OSSL_TOOL"
-            exit 129
-        fi
-        TOOL_DBG=${config_ossl[DEBUGGING]}
-        TOOL_LOG=${config_ossl[LOGGING]}
-        TOOL_NOTIFY=${config_ossl[EMAILING]}
-        local OPERATIONS=${config_ossl_util[OSSL_OPERATIONS]}
-        IFS=' ' read -ra OPS <<< "${OPERATIONS}"
-        check_op "${OP}" "${OPS[*]}"
-        STATUS=$?
-        if [ $STATUS -eq $NOT_SUCCESS ]; then
-            MSG="Force exit!"
-            info_debug_message_end "$MSG" "$FUNC" "$OSSL_TOOL"
-            exit 130
-        fi
-        local OSSL=${config_ossl_util[OSSL]}
-        check_tool "${OSSL}"
-        STATUS=$?
-        if [ $STATUS -eq $NOT_SUCCESS ]; then
-            MSG="Install tool ${OSSL}"
-            info_debug_message "$MSG" "$FUNC" "$OSSL_TOOL"
-            MSG="Force exit!"
-            info_debug_message_end "$MSG" "$FUNC" "$OSSL_TOOL"
-            exit 131
-        fi
-        MSG="Checking file [${FILE}]?"
-        info_debug_message_que "$MSG" "$FUNC" "$OSSL_TOOL"
-        if [ -f "${FILE}" ]; then
-            MSG="[ok]"
-            info_debug_message_ans "$MSG" "$FUNC" "$OSSL_TOOL"
-            if [ "${OP}" == "enc" ]; then
-                local TPASS="None"
-                while read -s -p 'Type password: ' TPASS && [[ -z "${TPASS}" ]]
-                do
-                    printf "%s" "Please, no blank passwords!"
-                done
-                __encrypt $FILE $TPASS
-                STATUS=$?
-                if [ $STATUS -eq $NOT_SUCCESS ]; then
-                    MSG="Force exit!"
-                    info_debug_message_end "$MSG" "$FUNC" "$OSSL_TOOL"
-                    exit 133
-                fi
-            elif [ "${OP}" == "dec" ]; then
-                __decrypt $FILE
-                STATUS=$?
-                if [ $STATUS -eq $NOT_SUCCESS ]; then
-                    MSG="Force exit!"
-                    info_debug_message_end "$MSG" "$FUNC" "$OSSL_TOOL"
-                    exit 134
-                fi
-            fi
-            MSG="Operation ${OP}, file: ${FILE} done"
-            OSSL_LOGGING[LOG_MSGE]=$MSG
-            OSSL_LOGGING[LOG_FLAG]="info"
-            logging OSSL_LOGGING
-            info_debug_message_end "Done" "$FUNC" "$OSSL_TOOL"
-            exit 0
-        fi
-        MSG="[not ok]"
-        info_debug_message_ans "$MSG" "$FUNC" "$OSSL_TOOL"
-        MSG="Missing file [${FILE}]"
+    if [[ -z "${OP}" || -z "${FILE}" ]]; then
+        usage OSSL_USAGE
+        exit 128
+    fi
+    display_logo OSSL_LOGO_DATA
+    local FUNC=${FUNCNAME[0]} MSG="None"
+    local STATUS_CONF STATUS_CONF_UTIL STATUS
+    MSG="Loading basic and util configuration!"
+    info_debug_message "$MSG" "$FUNC" "$OSSL_TOOL"
+    progress_bar PB_STRUCTURE
+    declare -A config_ossl=()
+    load_conf "$OSSL_CFG" config_ossl
+    STATUS_CONF=$?
+    declare -A config_ossl_util=()
+    load_util_conf "$OSSL_UTIL_CFG" config_ossl_util
+    STATUS_CONF_UTIL=$?
+    declare -A STATUS_STRUCTURE=([1]=$STATUS_CONF [2]=$STATUS_CONF_UTIL)
+    check_status STATUS_STRUCTURE
+    STATUS=$?
+    if [ $STATUS -eq $NOT_SUCCESS ]; then
+        MSG="Force exit!"
+        info_debug_message_end "$MSG" "$FUNC" "$OSSL_TOOL"
+        exit 129
+    fi
+    TOOL_DBG=${config_ossl[DEBUGGING]}
+    TOOL_LOG=${config_ossl[LOGGING]}
+    TOOL_NOTIFY=${config_ossl[EMAILING]}
+    local OPERATIONS=${config_ossl_util[OSSL_OPERATIONS]}
+    IFS=' ' read -ra OPS <<< "${OPERATIONS}"
+    check_op "${OP}" "${OPS[*]}"
+    STATUS=$?
+    if [ $STATUS -eq $NOT_SUCCESS ]; then
+        MSG="Force exit!"
+        info_debug_message_end "$MSG" "$FUNC" "$OSSL_TOOL"
+        exit 130
+    fi
+    local OSSL=${config_ossl_util[OSSL]}
+    check_tool "${OSSL}"
+    STATUS=$?
+    if [ $STATUS -eq $NOT_SUCCESS ]; then
+        MSG="Install tool ${OSSL}"
         info_debug_message "$MSG" "$FUNC" "$OSSL_TOOL"
         MSG="Force exit!"
         info_debug_message_end "$MSG" "$FUNC" "$OSSL_TOOL"
-        exit 132
+        exit 131
     fi
-    usage OSSL_USAGE
-    exit 128
+    MSG="Checking file [${FILE}]?"
+    info_debug_message_que "$MSG" "$FUNC" "$OSSL_TOOL"
+    if [ -f "${FILE}" ]; then
+        MSG="[ok]"
+        info_debug_message_ans "$MSG" "$FUNC" "$OSSL_TOOL"
+        if [ "${OP}" == "enc" ]; then
+            local TPASS="None"
+            while read -s -p 'Type password: ' TPASS && [[ -z "${TPASS}" ]]
+            do
+                printf "%s" "Please, no blank passwords!"
+            done
+            local OSSLT=${config_ossl_util[OSSL]}
+            local OSSLA=${config_ossl_util[OSSL_ALG]}
+            local IN_FILE="-salt -in ${FILE}" OUT_FILE="-out ${FILE}.aes"
+            eval "${OSSLT} ${OSSLA} ${IN_FILE} ${OUT_FILE} -k ${TPASS}"
+            STATUS=$?
+            if [ $STATUS -eq $NOT_SUCCESS ]; then
+                MSG="Force exit!"
+                info_debug_message_end "$MSG" "$FUNC" "$OSSL_TOOL"
+                exit 133
+            fi
+        elif [ "${OP}" == "dec" ]; then
+            local OSSLT=${config_ossl_util[OSSL]}
+            local OSSLA=${config_ossl_util[OSSL_ALG]}
+            local IN_FILE="-salt -in ${FILE}"
+            eval "${OSSLT} ${OSSLA} -d ${IN_FILE}"
+            STATUS=$?
+            if [ $STATUS -eq $NOT_SUCCESS ]; then
+                MSG="Force exit!"
+                info_debug_message_end "$MSG" "$FUNC" "$OSSL_TOOL"
+                exit 134
+            fi
+        fi
+        MSG="Operation ${OP}, file: ${FILE} done"
+        OSSL_LOGGING[LOG_MSGE]=$MSG
+        OSSL_LOGGING[LOG_FLAG]="info"
+        logging OSSL_LOGGING
+        info_debug_message_end "Done" "$FUNC" "$OSSL_TOOL"
+        exit 0
+    fi
+    MSG="[not ok]"
+    info_debug_message_ans "$MSG" "$FUNC" "$OSSL_TOOL"
+    MSG="Missing file [${FILE}]"
+    info_debug_message "$MSG" "$FUNC" "$OSSL_TOOL"
+    MSG="Force exit!"
+    info_debug_message_end "$MSG" "$FUNC" "$OSSL_TOOL"
+    exit 132
 }
 
 #

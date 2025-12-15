@@ -36,11 +36,11 @@ Navigate to release **[page](https://github.com/vroncevic/ossl/releases)** downl
 To install **ossl** type the following
 
 ```bash
-tar xvzf ossl-x.y.tar.gz
-cd ossl-x.y
-cp -R ~/sh_tool/bin/   /root/scripts/ossl/ver.x.y/
-cp -R ~/sh_tool/conf/  /root/scripts/ossl/ver.x.y/
-cp -R ~/sh_tool/log/   /root/scripts/ossl/ver.x.y/
+tar xvzf ossl-3.0.tar.gz
+cd ossl-3.0
+cp -R ~/sh_tool/bin/   /root/scripts/ossl/ver.3.0/
+cp -R ~/sh_tool/conf/  /root/scripts/ossl/ver.3.0/
+cp -R ~/sh_tool/log/   /root/scripts/ossl/ver.3.0/
 ```
 
 Self generated setup script and execution
@@ -49,7 +49,7 @@ Self generated setup script and execution
 ./ossl_setup.sh 
 
 [setup] installing App/Tool/Script ossl
-	Sat 27 Nov 2021 08:07:11 PM CET
+	Mon Dec 15 05:20:24 PM CET 2025
 [setup] clean up App/Tool/Script structure
 [setup] copy App/Tool/Script structure
 [setup] remove github editor configuration files
@@ -57,12 +57,8 @@ Self generated setup script and execution
 [setup] create symbolic link of App/Tool/Script
 [setup] done
 
-/root/scripts/ossl/ver.1.0/
+/root/scripts/ossl/ver.3.0/
 ├── bin/
-│   ├── center.sh
-│   ├── decrypt.sh
-│   ├── display_logo.sh
-│   ├── encrypt.sh
 │   └── ossl.sh
 ├── conf/
 │   ├── ossl.cfg
@@ -72,7 +68,7 @@ Self generated setup script and execution
     └── ossl.log
 
 3 directories, 9 files
-lrwxrwxrwx 1 root root 38 Nov 27 20:07 /root/bin/ossl -> /root/scripts/ossl/ver.1.0/bin/ossl.sh
+lrwxrwxrwx 1 root root 38 Dec 15 05:20 /root/bin/ossl -> /root/scripts/ossl/ver.3.0/bin/ossl.sh
 ```
 
 Or You can use docker to create image/container.
@@ -81,7 +77,7 @@ Or You can use docker to create image/container.
 
 ```bash
 # Create symlink for shell tool
-ln -s /root/scripts/ossl/ver.x.y/bin/ossl.sh /root/bin/ossl
+ln -s /root/scripts/ossl/ver.3.0/bin/ossl.sh /root/bin/ossl
 
 # Setting PATH
 export PATH=${PATH}:/root/bin/
@@ -89,8 +85,8 @@ export PATH=${PATH}:/root/bin/
 # Encrypt file
 ossl enc /opt/origin.txt
 
-ossl ver.1.0
-Sat 27 Nov 2021 08:17:16 PM CET
+ossl ver.3.0
+Mon Dec 15 05:20:44 PM CET 2025
 
 [check_root] Check permission for current session? [ok]
 [check_root] Done
@@ -107,7 +103,7 @@ Sat 27 Nov 2021 08:17:16 PM CET
                                  
 
 	                 
-	Info   github.io/ossl ver.1.0 
+	Info   github.io/ossl ver.3.0 
 	Issue  github.io/issue
 	Author vroncevic.github.io
 
@@ -115,13 +111,13 @@ Sat 27 Nov 2021 08:17:16 PM CET
 100% [================================================]
 
 [load_conf] Loading App/Tool/Script configuration!
-[check_cfg] Checking configuration file [/root/scripts/ossl/ver.1.0/conf/ossl.cfg] [ok]
+[check_cfg] Checking configuration file [/root/scripts/ossl/ver.3.0/conf/ossl.cfg] [ok]
 [check_cfg] Done
 
 [load_conf] Done
 
 [load_util_conf] Load module configuration!
-[check_cfg] Checking configuration file [/root/scripts/ossl/ver.1.0/conf/ossl_util.cfg] [ok]
+[check_cfg] Checking configuration file [/root/scripts/ossl/ver.3.0/conf/ossl_util.cfg] [ok]
 [check_cfg] Done
 
 [load_util_conf] Done
@@ -137,7 +133,7 @@ Type password: [ossl] Encrypt file [/opt/origin.txt]
 [ossl] Encrypted file: -salt -in /opt/origin.txt > -out /opt/origin.txt.aes
 [ossl] Done
 
-[logging] Checking directory [/root/scripts/ossl/ver.1.0/log/]? [ok]
+[logging] Checking directory [/root/scripts/ossl/ver.3.0/log/]? [ok]
 [logging] Write info log!
 [logging] Done
 
@@ -158,10 +154,6 @@ Shell tool structure
 ```bash
 sh_tool/
 ├── bin/
-│   ├── center.sh
-│   ├── decrypt.sh
-│   ├── display_logo.sh
-│   ├── encrypt.sh
 │   └── ossl.sh
 ├── conf/
 │   ├── ossl.cfg
@@ -183,7 +175,7 @@ More documentation and info at
 
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0) [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
-Copyright (C) 2016 - 2024 by [vroncevic.github.io/ossl](https://vroncevic.github.io/ossl)
+Copyright (C) 2016 - 2026 by [vroncevic.github.io/ossl](https://vroncevic.github.io/ossl)
 
 **ossl** is free software; you can redistribute it and/or modify
 it under the same terms as Bash itself, either Bash version 4.2.47 or,
