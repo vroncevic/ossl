@@ -46,11 +46,11 @@ To install **ossl** type the following
 
 .. code-block:: bash
 
-   tar xvzf ossl-x.y.tar.gz
-   cd ossl-x.y
-   cp -R ~/sh_tool/bin/   /root/scripts/ossl/ver.x.y/
-   cp -R ~/sh_tool/conf/  /root/scripts/ossl/ver.x.y/
-   cp -R ~/sh_tool/log/   /root/scripts/ossl/ver.x.y/
+   tar xvzf ossl-3.0.tar.gz
+   cd ossl-3.0
+   cp -R ~/sh_tool/bin/   /root/scripts/ossl/ver.3.0/
+   cp -R ~/sh_tool/conf/  /root/scripts/ossl/ver.3.0/
+   cp -R ~/sh_tool/log/   /root/scripts/ossl/ver.3.0/
 
 Or You can use Docker to create image/container.
 
@@ -72,10 +72,6 @@ Shell tool structure
 
    sh_tool/
    ├── bin/
-   │   ├── center.sh
-   │   ├── decrypt.sh
-   │   ├── display_logo.sh
-   │   ├── encrypt.sh
    │   └── ossl.sh
    ├── conf/
    │   ├── ossl.cfg
@@ -95,7 +91,7 @@ Copyright and licence
 .. |License: Apache 2.0| image:: https://img.shields.io/badge/License-Apache%202.0-blue.svg
    :target: https://opensource.org/licenses/Apache-2.0
 
-Copyright (C) 2016 - 2024 by `vroncevic.github.io/ossl <https://vroncevic.github.io/ossl>`_
+Copyright (C) 2016 - 2026 by `vroncevic.github.io/ossl <https://vroncevic.github.io/ossl>`_
 
 **ossl** is free software; you can redistribute it and/or modify it
 under the same terms as Bash itself, either Bash version 4.2.47 or,
